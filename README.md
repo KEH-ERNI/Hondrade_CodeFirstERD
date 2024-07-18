@@ -55,7 +55,7 @@ This project is a Government System developed using ASP.NET Core with a Code-Fir
     ```
 
 ## Entity-Relationship Diagram (ERD)
-![ERD](./erd-image.png)
+![ERD](https://github.com/KEH-ERNI/Hondrade_CodeFirstERD/blob/master/Hondrade_CodeFirstERD/wwwroot/erd-image.png)
 
 ## Entities
 ## API Endpoints
