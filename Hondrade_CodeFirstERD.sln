@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hondrade_CodeFirstERD", "Hondrade_CodeFirstERD\Hondrade_CodeFirstERD.csproj", "{0D780B84-AF9A-418D-A6E7-A8145CF7534A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D780B84-AF9A-418D-A6E7-A8145CF7534A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D780B84-AF9A-418D-A6E7-A8145CF7534A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D780B84-AF9A-418D-A6E7-A8145CF7534A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D780B84-AF9A-418D-A6E7-A8145CF7534A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB7C455C-426B-4DFE-9732-AF9180F27E85}
+	EndGlobalSection
+EndGlobal

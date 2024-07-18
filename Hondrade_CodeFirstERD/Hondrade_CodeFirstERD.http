@@ -1,0 +1,6 @@
+@Hondrade_CodeFirstERD_HostAddress = http://localhost:5266
+
+GET {{Hondrade_CodeFirstERD_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
