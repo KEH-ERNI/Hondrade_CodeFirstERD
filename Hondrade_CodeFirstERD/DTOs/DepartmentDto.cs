@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Hondrade_CodeFirstERD.Entities
+namespace Hondrade_CodeFirstERD.DTOs
 {
-    public class Department
+    public class DepartmentDto
     {
-
         [Key]
         public int DepID { get; set; }
 
@@ -18,8 +17,9 @@ namespace Hondrade_CodeFirstERD.Entities
         [Required]
         public DateTime EstDate { get; set; }
 
-        public ICollection<Service> Services { get; set; }
+        public ICollection<ServiceDto>? Services { get; set; }
 
-        public ICollection<Employee> Employees { get; set; }
+        public ICollection<EmployeeDto>? Employees { get; set; }
     }
+
 }

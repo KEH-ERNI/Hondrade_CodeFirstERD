@@ -21,5 +21,6 @@ namespace Hondrade_CodeFirstERD.Entities
         public int ServiceID { get; set; }
         [ForeignKey("ServiceID")]
         public Service Service { get; set; }
+
     }
 }
