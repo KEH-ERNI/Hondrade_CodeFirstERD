@@ -81,12 +81,7 @@ namespace Hondrade_CodeFirstERD.Controllers
 
             await _context.SaveChangesAsync();
 
-            var departments = await _context.Departments
-                .Include(d => d.Employees)
-                .Include(d => d.Services)
-                .ToListAsync();
-
-            var departmentDtos = _mapper.Map<List<DepartmentDto>>(departments);
+            var departmentDtos = _mapper.Map<DepartmentDto>(updateData);
 
             return Ok(departmentDtos);
         }

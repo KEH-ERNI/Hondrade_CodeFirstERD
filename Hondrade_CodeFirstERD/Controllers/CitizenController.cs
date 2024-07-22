@@ -1,4 +1,5 @@
-﻿using Hondrade_CodeFirstERD.DTOs;
+﻿using AutoMapper;
+using Hondrade_CodeFirstERD.DTOs;
 using Hondrade_CodeFirstERD.Entities;
 using Hondrade_CodeFirstERD.Services;
 using Microsoft.AspNetCore.Http;
@@ -13,124 +14,101 @@ namespace Hondrade_CodeFirstERD.Controllers
     public class CitizenController : ControllerBase
     {
         private readonly DataContext _context;
-        private readonly IWebHostEnvironment _environment;
-        public CitizenController(DataContext context, IWebHostEnvironment environment)
+        private readonly IMapper _mapper;
+        public CitizenController(DataContext context, IMapper mapper)
         {
             _context = context;
-            _environment = environment;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Citizen>>> GetAllCitizen()
         {
-            var citizens = await _context.Citizens.ToListAsync();
+            var citizens = await _context.Citizens
+                .Include(d => d.Applications)
+                .Include(d => d.Contacts)
+                .ToListAsync();
 
-            return Ok(citizens);
+            var citizenDtos = _mapper.Map<List<CitizenDto>>(citizens);
+
+            return Ok(citizenDtos);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Citizen>>> GetCitizen(int id)
         {
 
-            var citizens = await _context.Citizens.FindAsync(id);
+            var citizens = await _context.Citizens
+                .Include(d => d.Applications)
+                .Include(d => d.Contacts)
+                .FirstOrDefaultAsync(d => d.CitizenID == id);
+
             if (citizens is null)
             {
                 return NotFound("Citizen not found.");
             }
 
-            return Ok(citizens);
+            var citizensDto = _mapper.Map<CitizenDto>(citizens);
+            return Ok(citizensDto);
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Citizen>>> AddCitizen(CitizenDto citizen)
+        public async Task<ActionResult<CitizenDto>> AddCitizen(CitizenDto citizenDto)
         {
-
-            // _context.Citizens.Add(citizen);
-            // await _context.SaveChangesAsync();
-
-            var newCitizen = new Citizen
-            {
-                FName = citizen.FName,
-                MName = citizen.MName,
-                LName = citizen.LName,
-                Address = citizen.Address,
-                Bday = citizen.Bday,
-                Phone = citizen.Phone,
-                Email = citizen.Email,
-                UName = citizen.UName,
-                Password = citizen.Password,
-                ImgName = citizen.ImgName,
-                Applications = new List<Application>()
-            };
-
-            //return Ok(await _context.Citizens.ToListAsync());
-            //var application = new Application { SubmittedDate = citizen.Applications.SubmittedDate, Citizen = newCitizen };
-
-            //newCitizen.Application = application;
-
-            // _context.Citizens.Add(newCitizen);
-            // await _context.SaveChangesAsync();
-            //return Ok(await _context.Citizens.Include(c => c.Application.ToListAsync());
-
-         /*   foreach (var applicationDto in citizen.Applications)
-            {
-
-                var application = new Application
-                {
-                    SubmittedDate = applicationDto.SubmittedDate,
-                    ServiceID = applicationDto.ServiceID,
-                    Citizen = newCitizen
-                };
-                newCitizen.Applications.Add(application);
-            } */
-
-            _context.Citizens.Add(newCitizen);
+            var citizen = _mapper.Map<Citizen>(citizenDto);
+            _context.Citizens.Add(citizen);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Citizens.Include(c => c.Applications).ToListAsync());
-        }
+            var citizenResultDto = _mapper.Map<CitizenDto>(citizen);
+            return CreatedAtAction(nameof(GetCitizen), new { id = citizen.CitizenID}, citizenResultDto);
+        } 
 
-        [HttpPut]
-        public async Task<ActionResult<List<Citizen>>> UpdateCitizen(Citizen update)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<CitizenDto>>> UpdateCitizen(int id, CitizenDto updateDto)
         {
+            var updateData = await _context.Citizens
+                .Include(d => d.Applications)
+                .Include(d => d.Contacts)
+                .FirstOrDefaultAsync(d => d.CitizenID == id);
 
-            var updateData = await _context.Citizens.FindAsync(update.CitizenID);
-            if (updateData is null)
+            if(updateData is null)
             {
                 return NotFound("Citizen not found");
             }
 
-            updateData.FName = update.FName;
-            updateData.MName = update.MName;
-            updateData.LName = update.LName;
-            updateData.Address = update.Address;
-            updateData.Bday = update.Bday;
-            updateData.Phone = update.Phone;
-            updateData.Email = update.Email;
-            updateData.UName = update.UName;
-            updateData.Password = update.Password;
-            updateData.ImgName = update.ImgName;
-
+            _mapper.Map(updateDto, updateData);
 
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Citizens.ToListAsync());
+            var citizenDtos = _mapper.Map<CitizenDto>(updateData);
+            return Ok(citizenDtos);
+         
         }
 
-        [HttpDelete]
-        public async Task<ActionResult<List<Citizen>>> DeleteCitizen(int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<CitizenDto>>> DeleteCitizen(int id)
         {
-            var delData = await _context.Citizens.FindAsync(id);
+            var delData = await _context.Citizens
+                .Include(d => d.Applications)
+                .Include(d => d.Contacts)
+                .FirstOrDefaultAsync(d => d.CitizenID == id);
+
             if (delData is null)
             {
-                return NotFound("Sample not found");
+                return NotFound("Citizen not found");
 
             }
 
             _context.Citizens.Remove(delData);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Citizens.ToListAsync());
+            var citizens = await _context.Citizens
+                .Include(d => d.Applications)
+                .Include(d => d.Contacts)
+                .ToListAsync();
+
+            var citizenDtos = _mapper.Map<List<CitizenDto>>(citizens);
+            return Ok(citizenDtos);
         }
     }
 }

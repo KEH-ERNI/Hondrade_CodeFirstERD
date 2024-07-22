@@ -50,7 +50,7 @@ namespace Hondrade_CodeFirstERD.Migrations
 
                     b.HasIndex("ServiceID");
 
-                    b.ToTable("Applications");
+                    b.ToTable("Applications", (string)null);
                 });
 
             modelBuilder.Entity("Hondrade_CodeFirstERD.Entities.Citizen", b =>
@@ -110,7 +110,7 @@ namespace Hondrade_CodeFirstERD.Migrations
 
                     b.HasKey("CitizenID");
 
-                    b.ToTable("Citizens");
+                    b.ToTable("Citizens", (string)null);
                 });
 
             modelBuilder.Entity("Hondrade_CodeFirstERD.Entities.Contact", b =>
@@ -141,7 +141,7 @@ namespace Hondrade_CodeFirstERD.Migrations
 
                     b.HasIndex("EmpID");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("Hondrade_CodeFirstERD.Entities.Department", b =>
@@ -167,7 +167,7 @@ namespace Hondrade_CodeFirstERD.Migrations
 
                     b.HasKey("DepID");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("Hondrade_CodeFirstERD.Entities.Employee", b =>
@@ -224,7 +224,7 @@ namespace Hondrade_CodeFirstERD.Migrations
 
                     b.HasIndex("DepID");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("Hondrade_CodeFirstERD.Entities.Service", b =>
@@ -264,7 +264,7 @@ namespace Hondrade_CodeFirstERD.Migrations
 
                     b.HasIndex("DepID");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("Hondrade_CodeFirstERD.Entities.Application", b =>

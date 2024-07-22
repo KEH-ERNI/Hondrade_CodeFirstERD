@@ -10,5 +10,9 @@ namespace Hondrade_CodeFirstERD.DTOs
         public DateTime SubmittedDate { get; set; }
 
         public string Status { get; set; } = "Pending";
+
+        public int CitizenID { get; set; }
+
+        public int ServiceID { get; set; }
     }
 }

@@ -51,25 +51,11 @@ namespace Hondrade_CodeFirstERD.Controllers
             return Ok(servicesDto);
         }
 
-        /*  [HttpPost]
-          public async Task<ActionResult<ServiceDto>> AddService(ServiceDto serviceDto)
-          {
-              var service = _mapper.Map<Service>(serviceDto);
-              _context.Entry(service.Department).State = EntityState.Unchanged;
-
-              _context.Services.Add(service);
-              await _context.SaveChangesAsync();
-
-              var serviceResultDto = _mapper.Map<ServiceDto>(service);
-              return CreatedAtAction(nameof(GetService), new { id = service.ServiceID }, serviceResultDto);
-          } */
-
         [HttpPost]
         public async Task<ActionResult<ServiceDto>> AddService(ServiceDto serviceDto)
         {
             var service = _mapper.Map<Service>(serviceDto);
 
-           
             var department = await _context.Departments.FindAsync(serviceDto.DepID);
             if (department == null)
             {
