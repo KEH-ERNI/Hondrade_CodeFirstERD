@@ -8,8 +8,7 @@ This project is a Government System developed using ASP.NET Core with a Code-Fir
 
 1. [Project Setup](#project-setup)
 2. [Entity-Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
-4. [API Endpoints](#api-endpoints)
-5. [Database Context](#database-context)
+3. [Database Context](#database-context)
 
 
 ## Project Setup
@@ -56,7 +55,56 @@ This project is a Government System developed using ASP.NET Core with a Code-Fir
 
 ## Entity-Relationship Diagram (ERD)
 ![ERD](https://github.com/KEH-ERNI/Hondrade_CodeFirstERD/blob/master/Hondrade_CodeFirstERD/wwwroot/erd-image.png)
-
-## Entities
-## API Endpoints
+   
 ## Database Context
+```sh
+public class DataContext : DbContext
+{
+    public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+
+    public DbSet<Citizen> Citizens { get; set; }
+
+    public DbSet<Department> Departments { get; set; }
+
+    public DbSet<Service> Services { get; set; }
+
+    public DbSet<Application> Applications { get; set; }
+
+    public DbSet<Employee> Employees { get; set; }
+
+    public DbSet<Contact> Contacts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Application>()
+            .HasOne(a => a.Citizen)
+            .WithMany(c => c.Applications)
+            .HasForeignKey(a => a.CitizenID);
+
+        modelBuilder.Entity<Application>()
+            .HasOne(a => a.Service)
+            .WithMany(c => c.Applications)
+            .HasForeignKey(a => a.ServiceID);
+
+        modelBuilder.Entity<Service>()
+            .HasOne(a => a.Department)
+            .WithMany(c => c.Services)
+            .HasForeignKey(a => a.DepID);
+
+        modelBuilder.Entity<Employee>()
+            .HasOne(a => a.Department)
+            .WithMany(c => c.Employees)
+            .HasForeignKey(a => a.DepID);
+
+        modelBuilder.Entity<Contact>()
+            .HasOne(a => a.Employee)
+            .WithMany(c => c.Contacts)
+            .HasForeignKey(a => a.EmpID);
+
+        modelBuilder.Entity<Contact>()
+            .HasOne(a => a.Citizen)
+            .WithMany(c => c.Contacts)
+            .HasForeignKey(a => a.CitizenID);
+    }
+}
+```
