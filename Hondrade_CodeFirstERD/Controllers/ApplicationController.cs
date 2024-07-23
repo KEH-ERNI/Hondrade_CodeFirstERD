@@ -45,7 +45,7 @@ namespace Hondrade_CodeFirstERD.Controllers
 
             if(application == null)
             {
-                return NotFound();
+                return NotFound("Application not found.");
             }
 
             var applicationDto = _mapper.Map<ApplicationDto>(application);
@@ -87,8 +87,8 @@ namespace Hondrade_CodeFirstERD.Controllers
 
            if(application == null)
            {
-               return NotFound();
-           }
+                return NotFound("Application not found.");
+            }
 
            _mapper.Map(applicationDto, application);
            _context.Entry(application.Service).State = EntityState.Unchanged;
@@ -102,8 +102,8 @@ namespace Hondrade_CodeFirstERD.Controllers
            { 
                if(!ApplicationExists(id))
                {
-                   return NotFound();
-               } else
+                    return NotFound("Application not found.");
+                } else
                {
                    throw;
                }
@@ -119,7 +119,7 @@ namespace Hondrade_CodeFirstERD.Controllers
         {
             var application = await _context.Applications.FindAsync(id);
             if (application == null) {
-                return NotFound();
+                return NotFound("Application not found.");
             }
 
             _context.Applications.Remove(application);

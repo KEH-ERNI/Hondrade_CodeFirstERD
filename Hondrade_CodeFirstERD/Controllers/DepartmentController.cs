@@ -44,7 +44,7 @@ namespace Hondrade_CodeFirstERD.Controllers
 
             if (department == null)
             {
-                return NotFound();
+                return NotFound("Department not found");
             }
 
             var departmentDto = _mapper.Map<DepartmentDto>(department);

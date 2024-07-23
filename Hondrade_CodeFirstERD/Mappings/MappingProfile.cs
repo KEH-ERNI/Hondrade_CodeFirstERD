@@ -34,8 +34,8 @@ namespace Hondrade_CodeFirstERD.Mappings
                 .ForMember(dest => dest.CitizenID, opt => opt.Ignore());
 
             CreateMap<Application, ApplicationDto>()
-                .ForMember(dest => dest.ServiceID, opt => opt.MapFrom(src => src.Service.ServiceID))
-                .ForMember(dest => dest.CitizenID, opt => opt.MapFrom(src => src.Citizen.CitizenID))
+                .ForMember(dest => dest.ServiceID, opt => opt.MapFrom(src => src.Service != null ? src.Service.ServiceID : 0))
+                .ForMember(dest => dest.CitizenID, opt => opt.MapFrom(src => src.Citizen != null ? src.Citizen.CitizenID : 0))
                 .ReverseMap()
                 .ForMember(dest => dest.ApplicationID, opt => opt.Ignore())
                 .ForMember(dest => dest.Service, opt => opt.Ignore())
@@ -44,15 +44,14 @@ namespace Hondrade_CodeFirstERD.Mappings
                 .ForMember(dest => dest.CitizenID, opt => opt.Ignore());
 
             CreateMap<Contact, ContactDto>()
-                .ForMember(dest => dest.EmpID, opt => opt.MapFrom(src => src.Employee.EmpID))
-                .ForMember(dest => dest.CitizenID, opt => opt.MapFrom(src => src.Citizen.CitizenID))
+                .ForMember(dest => dest.EmpID, opt => opt.MapFrom(src => src.Employee != null ? src.Employee.EmpID : 0))
+                .ForMember(dest => dest.CitizenID, opt => opt.MapFrom(src => src.Citizen != null ? src.Citizen.CitizenID : 0))
                 .ReverseMap()
                 .ForMember(dest => dest.ContactID, opt => opt.Ignore())
                 .ForMember(dest => dest.Employee, opt => opt.Ignore())
                 .ForMember(dest => dest.EmpID, opt => opt.Ignore())
                 .ForMember(dest => dest.Citizen, opt => opt.Ignore())
                 .ForMember(dest => dest.CitizenID, opt => opt.Ignore());
-
         }
     }
 }

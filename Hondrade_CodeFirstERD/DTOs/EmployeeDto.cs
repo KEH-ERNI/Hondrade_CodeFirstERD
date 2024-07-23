@@ -1,6 +1,7 @@
 ﻿using Hondrade_CodeFirstERD.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Hondrade_CodeFirstERD.DTOs
 {
@@ -34,7 +35,6 @@ namespace Hondrade_CodeFirstERD.DTOs
 
         [MaxLength(50)]
         public string ImgName { get; set; } = string.Empty;
-
-        public ICollection<Contact>? Contacts { get; set; }
+        public ICollection<ContactDto>? Contacts { get; set; }
     }
 }

@@ -42,9 +42,9 @@ namespace Hondrade_CodeFirstERD.Controllers
                 .Include(d => d.Applications)
                 .FirstOrDefaultAsync(d => d.ServiceID == id);
 
-            if (service == null)
+            if (service is null)
             {
-                return NotFound();
+                return NotFound("Service not found.");
             }
 
             var servicesDto = _mapper.Map<ServiceDto>(service);
@@ -79,9 +79,9 @@ namespace Hondrade_CodeFirstERD.Controllers
                 .Include(s => s.Department)
                 .FirstOrDefaultAsync(s => s.ServiceID == id);
 
-            if (service == null)
+            if (service is null)
             {
-                return NotFound();
+                return NotFound("Service not found.");
             }
 
             _mapper.Map(serviceDto, service);
@@ -95,7 +95,7 @@ namespace Hondrade_CodeFirstERD.Controllers
             {
                 if (!ServiceExists(id))
                 {
-                    return NotFound();
+                    return NotFound("Service not found.");
                 }
                 else
                 {
@@ -113,7 +113,7 @@ namespace Hondrade_CodeFirstERD.Controllers
             var service = await _context.Services.FindAsync(id);
             if (service == null)
             {
-                return NotFound();
+                return NotFound("Service not found.");
             }
 
             _context.Services.Remove(service);

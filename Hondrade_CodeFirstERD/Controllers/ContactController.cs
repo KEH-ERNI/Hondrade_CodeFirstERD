@@ -29,7 +29,7 @@ namespace Hondrade_CodeFirstERD.Controllers
                 .Include(d => d.Employee)
                 .ToListAsync();
 
-            var contactDtos = _mapper.Map<List<ContactController>>(contacts);
+            var contactDtos = _mapper.Map<List<ContactDto>>(contacts);
             return Ok(contactDtos);
         }
 
@@ -98,7 +98,7 @@ namespace Hondrade_CodeFirstERD.Controllers
             {
                 if(!ContactExists(id))
                 {
-                    return NotFound();
+                    return NotFound("Contact not found");
                 }
                 else
                 {

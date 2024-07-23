@@ -26,6 +26,7 @@ namespace Hondrade_CodeFirstERD.Controllers
         {
             var employees = await _context.Employees
                 .Include(d => d.Department)
+                .Include(d => d.Contacts)
                 .ToListAsync();
 
             var employeeDtos = _mapper.Map<List<EmployeeDto>>(employees);
@@ -38,12 +39,14 @@ namespace Hondrade_CodeFirstERD.Controllers
         {
             var employee = await _context.Employees
                 .Include(d => d.Department)
-                 .FirstOrDefaultAsync(d => d.EmpID == id);
+                .Include(d => d.Contacts)
+                .FirstOrDefaultAsync(d => d.EmpID == id);
 
-            if (employee == null)
+            if (employee is null)
             {
-                return NotFound();
+                return NotFound("Employee not found.");
             }
+
             var employeeDtos = _mapper.Map<EmployeeDto>(employee);
 
             return Ok(employeeDtos);
@@ -75,11 +78,12 @@ namespace Hondrade_CodeFirstERD.Controllers
             
             var employee = await _context.Employees
                     .Include(d => d.Department)
+                    .Include(d => d.Contacts)
                     .FirstOrDefaultAsync(s => s.EmpID == id);
 
             if (employee == null)
             {
-                return NotFound();
+                return NotFound("Employee not found.");
             }
 
             _mapper.Map(employeeDto, employee);
@@ -93,7 +97,7 @@ namespace Hondrade_CodeFirstERD.Controllers
             {
                 if (!EmployeeExists(id))
                 {
-                    return NotFound();
+                    return NotFound("Employee not found.");
                 }
                 else
                 {
@@ -111,14 +115,17 @@ namespace Hondrade_CodeFirstERD.Controllers
             var employee = await _context.Employees.FindAsync(id);
             if (employee == null)
             {
-                return NotFound();
+                return NotFound("Employee not found.");
             }
 
             _context.Employees.Remove(employee);
 
             await _context.SaveChangesAsync();
 
-            var remainingEmployees = await _context.Services.Include(s => s.Department).ToListAsync();
+            var remainingEmployees = await _context.Employees
+                .Include(s => s.Department)
+                .Include(d => d.Contacts)
+                .ToListAsync();
 
             var remainingEmployeeDtos = _mapper.Map<List<EmployeeDto>>(remainingEmployees);
 

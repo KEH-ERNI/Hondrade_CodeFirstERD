@@ -1,6 +1,7 @@
 ﻿
 using Hondrade_CodeFirstERD.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Hondrade_CodeFirstERD.DTOs
 {
@@ -26,9 +27,7 @@ namespace Hondrade_CodeFirstERD.DTOs
 
         public int DepID { get; set; }
 
-        // public DepartmentDto? Department { get; set; }
-
-        public ICollection<Application>? Applications { get; set; }
+        public ICollection<ApplicationDto>? Applications { get; set; }
 
     }
 }
