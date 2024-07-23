@@ -26,7 +26,9 @@ namespace Hondrade_CodeFirstERD.Controllers
         {
             var departments = await _context.Departments
                 .Include(d => d.Services)
+                .ThenInclude(d => d.Applications)
                 .Include(d => d.Employees)
+                .ThenInclude(e => e.Contacts)
                 .ToListAsync();
 
             var departmentDtos = _mapper.Map<List<DepartmentDto>>(departments);
@@ -39,7 +41,9 @@ namespace Hondrade_CodeFirstERD.Controllers
         {
             var department = await _context.Departments
                 .Include(d => d.Services)
+                .ThenInclude(d => d.Applications)
                 .Include(d => d.Employees)
+                .ThenInclude(e => e.Contacts)
                 .FirstOrDefaultAsync(d=> d.DepID == id);
 
             if (department == null)
@@ -69,7 +73,9 @@ namespace Hondrade_CodeFirstERD.Controllers
 
             var updateData = await _context.Departments
                 .Include(d => d.Services)
+                .ThenInclude(d => d.Applications)
                 .Include(d => d.Employees)
+                .ThenInclude(e => e.Contacts)
                 .FirstOrDefaultAsync(d => d.DepID == id);
             
             if (updateData is null)
@@ -90,9 +96,11 @@ namespace Hondrade_CodeFirstERD.Controllers
         public async Task<ActionResult<List<DepartmentDto>>> DeleteDepartment(int id)
         {
             var delData = await _context.Departments
-                    .Include(d => d.Services)
-                    .Include(d => d.Employees)
-                    .FirstOrDefaultAsync(d => d.DepID == id);
+                .Include(d => d.Services)
+                .ThenInclude(d => d.Applications)
+                .Include(d => d.Employees)
+                .ThenInclude(e => e.Contacts)
+                .FirstOrDefaultAsync(d => d.DepID == id);
 
             if (delData is null)
             {
@@ -104,9 +112,11 @@ namespace Hondrade_CodeFirstERD.Controllers
             await _context.SaveChangesAsync();
 
             var departments = await _context.Departments
-                    .Include(d => d.Services)
-                    .Include(d => d.Employees)
-                    .ToListAsync();
+                .Include(d => d.Services)
+                .ThenInclude(d => d.Applications)
+                .Include(d => d.Employees)
+                .ThenInclude(e => e.Contacts)
+                .ToListAsync();
 
             var departmentDtos = _mapper.Map<List<DepartmentDto>>(departments);
             return Ok(departmentDtos);
