@@ -91,20 +91,7 @@ namespace Hondrade_CodeFirstERD.Controllers
             _context.Entry(contact.Citizen).State = EntityState.Unchanged;
             _context.Entry(contact.Employee).State = EntityState.Unchanged;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            } catch(DbUpdateConcurrencyException)
-            {
-                if(!ContactExists(id))
-                {
-                    return NotFound("Contact not found");
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             var updatedContactDto = _mapper.Map<ContactDto>(contact);
             return Ok(updatedContactDto);

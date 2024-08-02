@@ -94,22 +94,9 @@ namespace Hondrade_CodeFirstERD.Controllers
            _context.Entry(application.Service).State = EntityState.Unchanged;
            _context.Entry(application.Citizen).State = EntityState.Unchanged;
 
-           try
-           {
-               await _context.SaveChangesAsync();
-           }
-           catch (DbUpdateConcurrencyException) 
-           { 
-               if(!ApplicationExists(id))
-               {
-                    return NotFound("Application not found.");
-                } else
-               {
-                   throw;
-               }
-           }
+            await _context.SaveChangesAsync();
 
-           var updatedApplicationDto = _mapper.Map<ApplicationDto>(application);
+            var updatedApplicationDto = _mapper.Map<ApplicationDto>(application);
            return Ok(updatedApplicationDto);
        }
 
@@ -135,10 +122,6 @@ namespace Hondrade_CodeFirstERD.Controllers
             return Ok(remainingApplicationDtos);
         }
        
-        private bool ApplicationExists(int id)
-        {
-            return _context.Applications.Any(e => e.ApplicationID == id);
-        }
 
     }
 }

@@ -87,21 +87,7 @@ namespace Hondrade_CodeFirstERD.Controllers
             _mapper.Map(serviceDto, service);
             _context.Entry(service.Department).State = EntityState.Unchanged;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ServiceExists(id))
-                {
-                    return NotFound("Service not found.");
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             var updatedServiceDto = _mapper.Map<ServiceDto>(service);
             return Ok(updatedServiceDto);
@@ -126,11 +112,6 @@ namespace Hondrade_CodeFirstERD.Controllers
             var remainingServiceDtos = _mapper.Map<List<ServiceDto>>(remainingServices);
 
             return Ok(remainingServiceDtos);
-        }
-
-        private bool ServiceExists(int id)
-        {
-            return _context.Services.Any(e => e.ServiceID == id);
         }
 
     }

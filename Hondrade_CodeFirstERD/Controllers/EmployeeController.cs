@@ -89,21 +89,7 @@ namespace Hondrade_CodeFirstERD.Controllers
             _mapper.Map(employeeDto, employee);
             _context.Entry(employee.Department).State = EntityState.Unchanged;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeExists(id))
-                {
-                    return NotFound("Employee not found.");
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             var updatedEmployeeDto = _mapper.Map<EmployeeDto>(employee);
             return Ok(updatedEmployeeDto);
